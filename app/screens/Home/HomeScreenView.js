@@ -5,44 +5,50 @@ import {
   TextInput,
   FlatList,
   Button,
+  ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import s from './styles';
 
 import { data } from '../../Mocks/items.js';
 import ItemList from '../../Components/ItemList/ItemList';
 
-const HomeScreenView = ({
-  addToCollection,
-  collectionName,
-  showState,
-  setTask,
-  task,
-}) => (
-  <View style={s.container}>
-    <FlatList
-      data={data}
-      ListHeaderComponent={() => (
-        <TextInput
-          placeholder="Add item"
-          style={s.textInput}
-          onChangeText={setTask}
-          value={task}
-        />
-      )}
-      renderItem={({ item }) => (
-        <ItemList task={item.task} status={item.status} />
-      )}
+const HomeScreenView = () => {
+  const array = data.map((item) => (
+    <ItemList
+      task={item.task}
+      completed={item.completed}
+      style={s.task}
     />
-    <View>
-      <Button title="show" onPress={showState} />
-      <Button title="Add" onPress={addToCollection} />
-      <Text />
+  ));
+  return (
+    <View style={s.container}>
+      <View style={s.containerInput}>
+        <MaterialCommunityIcons
+          name="plus"
+          size={30}
+          style={s.icon}
+        />
+        <TextInput placeholder="Add item" style={s.textInput} />
+      </View>
+      {array}
+      <TouchableOpacity style={s.touchableBtn}>
+        <Text style={s.touchableBtnText}>HIDE CHECKED-OFF ITEMS</Text>
+      </TouchableOpacity>
     </View>
-  </View>
-);
+  );
+};
 
 HomeScreenView.navigationOptions = {
   title: 'My shopping lists',
+  headerRight: (
+    <ActivityIndicator
+      size={30}
+      color="#924E46"
+      style={s.activityIndicator}
+    />
+  ),
 };
 
 export default HomeScreenView;

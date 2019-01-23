@@ -1,10 +1,10 @@
 export const data = [
   {
     task: 'buy milk',
-    status: false,
+    completed: false,
   },
   {
     task: 'buy eggs',
-    status: true,
+    completed: true,
   },
 ];
